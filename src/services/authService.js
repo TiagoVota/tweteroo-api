@@ -2,11 +2,9 @@ const accountsList = []
 
 
 const signUp = (req, res) => {
-	const { username, avatar } = req.body
+	const { body: { username, avatar } } = req
 
 	addUser({ username, avatar })
-
-	console.log({accountsList})
 
 	return res.status(201).send('Usuário criado com sucesso!')
 }
