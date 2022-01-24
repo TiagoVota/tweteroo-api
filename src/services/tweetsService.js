@@ -6,11 +6,13 @@ import { validationErrors } from '../validations/handleValidation.js'
 import InputsError from '../errors/InputsError.js'
 
 
-const getTweetsList = async () => {
-	const lastTweets = await tweetsRepository.getLastTweets({})
+const getTweetsList = async ({ page }) => {
+	page = Number(page || 1)
 
+	const lastTweets = await tweetsRepository.getLastTweets({ page, qnt: 10 })
+	
 	const orderedTweets = reverseList(lastTweets)
-
+	
 	return orderedTweets
 }
 

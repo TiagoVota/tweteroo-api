@@ -2,8 +2,10 @@ import * as tweetsService from '../services/tweetsService.js'
 
 
 const getTweets = async (req, res, next) => {
+	const { query: { page } } = req
+
 	try {
-		const tweetsList = await tweetsService.getTweetsList()
+		const tweetsList = await tweetsService.getTweetsList({ page })
 
 		return res.status(200).send(tweetsList)
 

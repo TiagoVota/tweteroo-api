@@ -2,14 +2,23 @@ import accountsList from '../mock/authMock.js'
 import tweetsList from '../mock/tweetsMock.js'
 
 
-const getLastTweets = async ({ qnt=10 }) => {
-	const lastTweets = await takeLastElements(tweetsList, qnt)
-	const tweetsWithAvatar = await includeAvatar(lastTweets, accountsList)
+const getLastTweets = async ({ page, qnt }) => {
+	const pageTweets = await takeArrElements(tweetsList, qnt, page)
+	console.log({ pageTweets })
+	const tweetsWithAvatar = await includeAvatar(pageTweets, accountsList)
 
 	return tweetsWithAvatar
 }
 
-const takeLastElements = (arr, qnt) => arr.slice(Math.max(arr.length - qnt, 0))
+const takeArrElements = (arr, qnt, page) => {
+	const len = arr.length
+	const previousStart = len - (qnt * page)
+
+	const start = (previousStart < 0) ? 0 : previousStart
+	const end = start + qnt
+
+	return arr.slice(start, end)
+}
 
 const includeAvatar = (tweetsArr, accountsList) => {
 	return tweetsArr.map((tweet) => {
