@@ -1,0 +1,8 @@
+const signUp = () => {
+
+}
+
+
+export {
+	signUp,
+}
