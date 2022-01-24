@@ -13,6 +13,20 @@ const getTweets = async (req, res, next) => {
 }
 
 
+const getUserTweets = async (req, res, next) => {
+	const { params: { username } } = req
+
+	try {
+		const userTweets = await tweetsService.getUserTweetsList({ username })
+
+		return res.status(200).send(userTweets)
+
+	} catch (error) {
+		next(error)
+	}
+}
+
+
 const sendTweet = async (req, res, next) => {
 	const { body: tweetInfo } = req
 
@@ -33,5 +47,6 @@ const sendTweet = async (req, res, next) => {
 
 export {
 	getTweets,
+	getUserTweets,
 	sendTweet,
 }

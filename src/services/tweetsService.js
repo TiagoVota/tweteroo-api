@@ -7,9 +7,18 @@ import InputsError from '../errors/InputsError.js'
 
 
 const getTweetsList = async () => {
-	const lastTweets = await tweetsRepository.takeLastTweets({})
+	const lastTweets = await tweetsRepository.getLastTweets({})
 
 	const orderedTweets = reverseList(lastTweets)
+
+	return orderedTweets
+}
+
+
+const getUserTweetsList = async ({ username }) => {
+	const userTweets = await tweetsRepository.getUserTweets({ username })
+
+	const orderedTweets = reverseList(userTweets)
 
 	return orderedTweets
 }
@@ -33,5 +42,6 @@ const postUserTweet = async (tweetInfo) => {
 
 export {
 	getTweetsList,
+	getUserTweetsList,
 	postUserTweet,
 }
