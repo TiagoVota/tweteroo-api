@@ -4,7 +4,7 @@ import tweetsList from '../mock/tweetsMock.js'
 
 const getLastTweets = async ({ page, qnt }) => {
 	const pageTweets = await takeArrElements(tweetsList, qnt, page)
-	console.log({ pageTweets })
+
 	const tweetsWithAvatar = await includeAvatar(pageTweets, accountsList)
 
 	return tweetsWithAvatar
@@ -35,7 +35,8 @@ const includeAvatar = (tweetsArr, accountsList) => {
 }
 
 const findUserAvatarByUsername = ({ username, accountsList }) => {
-	const { avatar } = accountsList.find(account => account.username === username)
+	const avatar = accountsList
+		.find(account => account.username === username)?.avatar
 
 	return avatar
 }

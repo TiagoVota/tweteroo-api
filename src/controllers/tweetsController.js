@@ -10,6 +10,10 @@ const getTweets = async (req, res, next) => {
 		return res.status(200).send(tweetsList)
 
 	} catch (error) {
+		const { name: errorName, message, status } = error
+
+		if (errorName === 'InputsError') return res.status(status).send(message)
+		
 		next(error)
 	}
 }
@@ -24,16 +28,23 @@ const getUserTweets = async (req, res, next) => {
 		return res.status(200).send(userTweets)
 
 	} catch (error) {
+		const { name: errorName, message, status } = error
+
+		if (errorName === 'InputsError') return res.status(status).send(message)
+		
 		next(error)
 	}
 }
 
 
 const sendTweet = async (req, res, next) => {
-	const { body: tweetInfo } = req
+	const {
+		body: tweetInfo,
+		headers: { user: username }
+	} = req
 
 	try {
-		const tweet = await tweetsService.postUserTweet(tweetInfo)
+		const tweet = await tweetsService.postUserTweet({ ...tweetInfo, username})
 	
 		return res.status(201).send(tweet)
 		
