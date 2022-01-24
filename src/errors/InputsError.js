@@ -3,7 +3,7 @@ class InputsError extends Error {
 		super(message)
 		this.name = 'InputsError'
 		this.message = message
-		this.status = 422
+		this.status = 400
 	}
 }
 
