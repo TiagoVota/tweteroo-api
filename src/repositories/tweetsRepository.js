@@ -3,19 +3,24 @@ import tweetsList from '../mock/tweetsMock.js'
 
 
 const getLastTweets = async ({ page, qnt }) => {
-	const pageTweets = await takeArrElements(tweetsList, qnt, page)
+	const pageTweets = await getPageList(tweetsList, qnt, page)
 
 	const tweetsWithAvatar = await includeAvatar(pageTweets, accountsList)
 
 	return tweetsWithAvatar
 }
 
-const takeArrElements = (arr, qnt, page) => {
+const getPageList = (arr, qnt, page) => {
 	const len = arr.length
 	const previousStart = len - (qnt * page)
 
-	const start = (previousStart < 0) ? 0 : previousStart
-	const end = start + qnt
+	let [ start, end ] = [previousStart, previousStart + qnt]
+
+	if (previousStart < 0) {
+		[ start, end ] = [0, len % qnt]
+
+		if (previousStart + qnt < 0) end = 0
+	}
 
 	return arr.slice(start, end)
 }
