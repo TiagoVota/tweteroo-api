@@ -1,4 +1,4 @@
-const accountsList = []
+import accountsList from '../mock/authMock.js'
 
 
 const signUp = (req, res) => {
