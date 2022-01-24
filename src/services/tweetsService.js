@@ -1,4 +1,9 @@
 import * as tweetsRepository from '../repositories/tweetsRepository.js'
+import * as tweetsValidation from '../validations/tweetsValidation.js'
+
+import { validationErrors } from '../validations/handleValidation.js'
+
+import InputsError from '../errors/InputsError.js'
 
 
 const getTweetsList = async () => {
@@ -12,10 +17,17 @@ const getTweetsList = async () => {
 const reverseList = arr => [ ...arr ].reverse()
 
 
-const postUserTweet = async ({ username, tweet }) => {
-	const tweetInfo = await tweetsRepository.addTweet({ username, tweet })
+const postUserTweet = async (tweetInfo) => {
+	const inputsErrors = validationErrors({
+		objectToValid: tweetInfo,
+		objectValidation: tweetsValidation.validatePostTweet
+	})
 
-	return tweetInfo
+	if (inputsErrors) throw new InputsError(inputsErrors)
+
+	const tweet = await tweetsRepository.addTweet(tweetInfo)
+
+	return tweet
 }
 
 

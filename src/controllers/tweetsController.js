@@ -14,14 +14,18 @@ const getTweets = async (req, res, next) => {
 
 
 const sendTweet = async (req, res, next) => {
-	const { body: { username, tweet } } = req
+	const { body: tweetInfo } = req
 
 	try {
-		const tweetInfo = await tweetsService.postUserTweet({ username, tweet })
+		const tweet = await tweetsService.postUserTweet(tweetInfo)
 	
-		return res.status(201).send(tweetInfo)
+		return res.status(201).send(tweet)
 		
 	} catch (error) {
+		const { name: errorName, message, status } = error
+
+		if (errorName === 'InputsError') return res.status(status).send(message)
+		
 		next(error)
 	}
 }
