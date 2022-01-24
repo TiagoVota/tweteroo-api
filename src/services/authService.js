@@ -1,22 +1,14 @@
-import accountsList from '../mock/authMock.js'
+import * as authRepository from '../repositories/authRepository.js'
 
 
-const signUp = (req, res) => {
-	const { body: { username, avatar } } = req
+const signUpUser = async ({ username, avatar }) => {
+	const user = await authRepository.addUser({ username, avatar })
 
-	addUser({ username, avatar })
-
-	return res.status(201).send('Usuário criado com sucesso!')
+	return user
 }
 
-const addUser = ({ username, avatar }) => {
-	accountsList.push({
-		username,
-		avatar			
-	})
-}
 
 
 export {
-	signUp,
+	signUpUser,
 }

@@ -1,13 +1,13 @@
 import { Router } from 'express'
 
-import * as tweetsService from '../services/tweetsService.js'
+import * as tweetsController from '../controllers/tweetsController.js'
 
 
 const router = new Router()
 
-router.get('', tweetsService.getTweets)
+router.get('', tweetsController.getTweets)
 
-router.post('', tweetsService.sendTweet)
+router.post('', tweetsController.sendTweet)
 
 
 export default router
